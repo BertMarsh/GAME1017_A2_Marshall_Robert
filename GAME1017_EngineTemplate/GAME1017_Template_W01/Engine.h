@@ -1,4 +1,5 @@
 #pragma once
+#include "State.h"
 #include "StateManager.h"
 
 #include <iostream>
@@ -36,4 +37,5 @@ public: // Public methods.
 	bool KeyDown(SDL_Scancode c);
 	SDL_Renderer* GetRenderer();
 	StateManager& GetStateManager();
+	
 };

@@ -1,4 +1,6 @@
 #include "Engine.h"
+#include "State.h"
+
 #include <iostream>
 #define WIDTH 1024
 #define HEIGHT 768
@@ -30,7 +32,8 @@ bool Engine::Init(const char* title, int xpos, int ypos, int width, int height, 
 	else return false; // SDL init fail.
 	m_fps = (Uint32)round((1 / (double)FPS) * 1000); // Sets FPS in milliseconds and rounds.
 	m_iKeystates = SDL_GetKeyboardState(nullptr);
-
+	m_pStateManager = new StateManager;
+	m_pStateManager->ChangeState(new TitleState());
 	m_bRunning = true; // Everything is okay, start the engine.
 	cout << "Init success!" << endl;
 	return true;
@@ -83,11 +86,12 @@ bool Engine::KeyDown(SDL_Scancode c)
 
 void Engine::Update()
 {
-
+	m_pStateManager->Update();
 }
 
 void Engine::Render()
 {
+	m_pStateManager->Render();
 	SDL_SetRenderDrawColor(m_pRenderer, 0, 0, 0, 255);
 	SDL_RenderClear(m_pRenderer); // Clear the screen with the draw color.
 	// Render stuff.
@@ -99,6 +103,9 @@ void Engine::Render()
 void Engine::Clean()
 {
 	cout << "Cleaning game." << endl;
+	m_pStateManager->Clean();
+	delete m_pStateManager;
+	m_pStateManager = nullptr;
 	SDL_DestroyRenderer(m_pRenderer);
 	SDL_DestroyWindow(m_pWindow);
 	SDL_Quit();
@@ -130,3 +137,4 @@ Engine& Engine::Instance()
 }
 
 SDL_Renderer* Engine::GetRenderer() { return m_pRenderer; }
+StateManager& Engine::GetStateManager() { return *m_pStateManager; }
