@@ -1,4 +1,8 @@
 #pragma once
+#include "StateManager.h"
+
+#include <iostream>
+
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_mixer.h>
@@ -14,6 +18,7 @@ private: // Private properties.
 	Uint32 m_start, m_end, m_delta, m_fps; // Fixed timestep variables.
 	SDL_Window* m_pWindow; // This represents the SDL window.
 	SDL_Renderer* m_pRenderer; // This represents the buffer to draw to.
+	StateManager* m_pStateManager;
 
 private: // Private methods.
 	bool Init(const char* title, int xpos, int ypos, int width, int height, int flags);
@@ -30,4 +35,5 @@ public: // Public methods.
 	static Engine& Instance(); // This static method creates the static instance that can be accessed 'globally'
 	bool KeyDown(SDL_Scancode c);
 	SDL_Renderer* GetRenderer();
+	StateManager& GetStateManager();
 };

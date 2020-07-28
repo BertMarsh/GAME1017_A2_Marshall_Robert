@@ -25,6 +25,7 @@ public:
 
 class GameState : public State
 {
+public:
 	GameState();
 	void Enter();
 	void Update();
