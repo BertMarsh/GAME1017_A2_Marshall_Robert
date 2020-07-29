@@ -22,6 +22,7 @@ private: // Private properties.
 	StateManager* m_pStateManager;
 
 private: // Private methods.
+	Engine();
 	bool Init(const char* title, int xpos, int ypos, int width, int height, int flags);
 	void Wake();
 	void Sleep();
@@ -30,7 +31,6 @@ private: // Private methods.
 	void Render();
 	void Clean();
 public: // Public methods.
-	Engine();
 	~Engine();
 	int Run();
 	static Engine& Instance(); // This static method creates the static instance that can be accessed 'globally'

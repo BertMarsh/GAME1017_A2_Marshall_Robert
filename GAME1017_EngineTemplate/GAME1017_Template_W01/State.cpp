@@ -10,10 +10,7 @@ void State::Render()
 	SDL_RenderPresent(Engine::Instance().GetRenderer());
 }
 
-void State::Resume()
-{
-
-}
+void State::Resume(){}
 
 //TitleState
 TitleState::TitleState() {}
@@ -30,8 +27,8 @@ void TitleState::Update()
 
 void TitleState::Render()
 {
-	std::cout << "Rendering Title." << std::endl;
-	SDL_SetRenderDrawColor(Engine::Instance().GetRenderer(), 0, 0, 0, 255);
+	std::cout << "Rendering Title" << std::endl;
+	SDL_SetRenderDrawColor(Engine::Instance().GetRenderer(), 128, 45, 0, 255);
 	SDL_RenderClear(Engine::Instance().GetRenderer());
 	State::Render();
 }
@@ -94,6 +91,7 @@ void PauseState::Update()
 
 void PauseState::Render()
 {
+	std::cout << "Rendering Pause" << std::endl;
 	Engine::Instance().GetStateManager().GetStates().front()->Render();
 	SDL_SetRenderDrawBlendMode(Engine::Instance().GetRenderer(), SDL_BLENDMODE_BLEND);
 	SDL_SetRenderDrawColor(Engine::Instance().GetRenderer(), 128, 0, 128, 128);
@@ -104,7 +102,7 @@ void PauseState::Render()
 
 void PauseState::Exit()
 {
-
+	std::cout << "Returning to game." << std::endl;
 }
 
 //EndState
@@ -124,7 +122,7 @@ if (Engine::Instance().KeyDown(SDL_SCANCODE_N))
 }
 void EndState::Render()
 {
-	SDL_SetRenderDrawColor(Engine::Instance().GetRenderer(), 0, 128, 0, 255);
+	SDL_SetRenderDrawColor(Engine::Instance().GetRenderer(), 0, 128, 128, 255);
 	SDL_RenderClear(Engine::Instance().GetRenderer());
 	State::Render();
 }
@@ -135,13 +133,10 @@ void EndState::Exit()
 }
 
 //StateManager
-StateManager::StateManager()
-{
-}
+StateManager::StateManager(){}
 
 StateManager::~StateManager()
-{
-}
+{}
 
 void StateManager::Update()
 {
@@ -166,6 +161,7 @@ void StateManager::ChangeState(State* pState)
 		m_vStates.pop_back();
 	}
 	pState->Enter();
+	m_vStates.push_back(pState);
 }
 
 void StateManager::PushState(State* pState)
