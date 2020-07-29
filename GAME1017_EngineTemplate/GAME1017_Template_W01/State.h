@@ -1,6 +1,8 @@
 #pragma once
 #include <SDL.h>
 
+#include "Sprite.h"
+
 #include <vector>
 
 
@@ -28,6 +30,9 @@ public:
 
 class GameState : public State
 {
+private:
+	SDL_Texture* m_pBGText;
+	Sprite BgArray[2];
 public:
 	GameState();
 	void Enter();

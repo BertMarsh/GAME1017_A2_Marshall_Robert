@@ -1,6 +1,6 @@
 #include "Engine.h"
-#include "State.h"
-#include "StateManager.h"
+
+
 #include <iostream>
 #define WIDTH 1024
 #define HEIGHT 768
@@ -34,6 +34,7 @@ bool Engine::Init(const char* title, int xpos, int ypos, int width, int height, 
 	m_iKeystates = SDL_GetKeyboardState(nullptr);
 	m_pStateManager = new StateManager();
 	m_pStateManager->ChangeState(new TitleState());
+	BgArray[0] = { {0, 0, 1024, 768}, {0,0,1024,768} };
 	m_bRunning = true; // Everything is okay, start the engine.
 	cout << "Init success!" << endl;
 	return true;

@@ -1,8 +1,17 @@
 #include "State.h"
 #include "Engine.h"
 
+#include <SDL.h>
+#include <SDL_image.h>
+#include <SDL_mixer.h>
+#include <SDL_ttf.h>
 
 #include <iostream>
+#include <vector>
+
+#define BGSCROLL 2
+#define PSPEED 5
+
 
 //Base
 void State::Render()
@@ -43,6 +52,8 @@ GameState::GameState() {}
 void GameState::Enter()
 {
 	std::cout << "Entering Game." << std::endl;
+	m_pBGText = IMG_LoadTexture(Engine::Instance().GetRenderer(), "Assets/Backgrounds.png");
+	/*m_pBGText = IMG_LoadTexture(Engine::Instance().GetRenderer(), "Assets/Backgrounds.png");*/
 }
 
 void GameState::Update()
@@ -58,8 +69,10 @@ void GameState::Update()
 void GameState::Render()
 {
 	std::cout << "Rendering Game." << std::endl;
-	SDL_SetRenderDrawColor(Engine::Instance().GetRenderer(), 0, 255, 0, 255);
+	SDL_SetRenderDrawColor(Engine::Instance().GetRenderer(), 0, 0, 0, 255);
 	SDL_RenderClear(Engine::Instance().GetRenderer());
+	//Background
+	SDL_RenderCopy(Engine::Instance().GetRenderer(), m_pBGText, BgArray[i]);
 	if (dynamic_cast<GameState*>(Engine::Instance().GetStateManager().GetStates().back()))
 		State::Render();
 }
