@@ -27,7 +27,6 @@ void TitleState::Update()
 
 void TitleState::Render()
 {
-	std::cout << "Rendering Title" << std::endl;
 	SDL_SetRenderDrawColor(Engine::Instance().GetRenderer(), 128, 45, 0, 255);
 	SDL_RenderClear(Engine::Instance().GetRenderer());
 	State::Render();
@@ -91,7 +90,6 @@ void PauseState::Update()
 
 void PauseState::Render()
 {
-	std::cout << "Rendering Pause" << std::endl;
 	Engine::Instance().GetStateManager().GetStates().front()->Render();
 	SDL_SetRenderDrawBlendMode(Engine::Instance().GetRenderer(), SDL_BLENDMODE_BLEND);
 	SDL_SetRenderDrawColor(Engine::Instance().GetRenderer(), 128, 0, 128, 128);
@@ -102,7 +100,7 @@ void PauseState::Render()
 
 void PauseState::Exit()
 {
-	std::cout << "Returning to game." << std::endl;
+	std::cout << "Returning to Game" << std::endl;
 }
 
 //EndState
@@ -133,10 +131,13 @@ void EndState::Exit()
 }
 
 //StateManager
-StateManager::StateManager(){}
+StateManager::StateManager()
+{
+}
 
 StateManager::~StateManager()
-{}
+{
+}
 
 void StateManager::Update()
 {
