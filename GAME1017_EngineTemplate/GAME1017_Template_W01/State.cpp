@@ -54,15 +54,15 @@ GameState::GameState() {}
 void GameState::Enter()
 {
 	std::cout << "Entering Game." << std::endl;
-	
+	//Background
 	m_pBGText = IMG_LoadTexture(Engine::Instance().GetRenderer(), "../Assets/Background.png");
 	BgArray[0] = { {0,0,1024,768}, {0,0,1024,768} };
 	BgArray[1] = { {0,0,1024,768}, {1024,0,1024,768} };
-	
+	//Foreground
 	m_pFGText = IMG_LoadTexture(Engine::Instance().GetRenderer(), "../Assets/Platform.png");
-	FgArray[0] = { {0,0,1024,257}, {0,0,1024,257} };
-	//FgArray[1] = { {0,0,1024,768}, {504,0,1024,768} };
-	//FgArray[2] = { {0,0,1024,768}, {1008,0,1024,768} };
+	FgArray[0] = { {0,0,1024,257}, {0,600,1024,257} };
+	FgArray[1] = { {0,0,1024,257}, {1024,600,1024,257} };
+	//Pilars
 	
 	
 }

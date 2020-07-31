@@ -34,7 +34,8 @@ private:
 	SDL_Texture* m_pBGText;
 	SDL_Texture* m_pFGText;
 	Sprite BgArray[2];
-	Sprite FgArray[3];
+	Sprite FgArray[2];
+	Sprite PArray[3];
 public:
 	GameState();
 	void Enter();
