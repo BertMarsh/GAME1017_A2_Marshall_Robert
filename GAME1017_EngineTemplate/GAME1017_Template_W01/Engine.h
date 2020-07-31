@@ -1,6 +1,7 @@
 #pragma once
 #include "Sprite.h"
 #include "State.h"
+#include "StateManager.h"
 
 #include <iostream>
 
@@ -21,8 +22,8 @@ private: // Private properties.
 	SDL_Renderer* m_pRenderer; // This represents the buffer to draw to.
 	StateManager* m_pStateManager;
 	
-	//SDL_Texture* m_pBGText;
-	Sprite BgArray[2];
+	/*SDL_Texture* m_pBGText;
+	Sprite BgArray[2];*/
 
 private: // Private methods.
 	Engine();

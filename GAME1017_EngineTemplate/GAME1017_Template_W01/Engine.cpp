@@ -1,5 +1,5 @@
 #include "Engine.h"
-
+#include "StateManager.h"
 
 #include <iostream>
 #define WIDTH 1024
@@ -23,7 +23,7 @@ bool Engine::Init(const char* title, int xpos, int ypos, int width, int height, 
 			m_pRenderer = SDL_CreateRenderer(m_pWindow, -1, 0);
 			if (m_pRenderer != nullptr) // Renderer init success.
 			{
-
+				
 			}
 			else return false; // Renderer init fail.
 		}
@@ -32,9 +32,8 @@ bool Engine::Init(const char* title, int xpos, int ypos, int width, int height, 
 	else return false; // SDL init fail.
 	m_fps = (Uint32)round((1 / (double)FPS) * 1000); // Sets FPS in milliseconds and rounds.
 	m_iKeystates = SDL_GetKeyboardState(nullptr);
-	m_pStateManager = new StateManager();
-	m_pStateManager->ChangeState(new TitleState());
-	BgArray[0] = { {0, 0, 1024, 768}, {0,0,1024,768} };
+	StateManager::ChangeState(new TitleState);
+	
 	m_bRunning = true; // Everything is okay, start the engine.
 	cout << "Init success!" << endl;
 	return true;
@@ -88,11 +87,23 @@ bool Engine::KeyDown(SDL_Scancode c)
 void Engine::Update()
 {
 	m_pStateManager->Update();
+	/*for (int i = 0; i < 2; i++)
+		BgArray[i].GetDstP()->x -= BGSCROLL;
+	if (BgArray[1].GetDstP()->x <= 0)
+	{
+		BgArray[0].GetDstP()->x = 0;
+		BgArray[1].GetDstP()->x = 1024;
+	}*/
 }
 
 void Engine::Render()
 {
 	m_pStateManager->Render();
+//	SDL_SetRenderDrawColor(Engine::Instance().GetRenderer(), 0, 0, 0, 255);
+//	SDL_RenderClear(Engine::Instance().GetRenderer());
+//	//Background
+//	for (int i = 0; i < 2; i++)
+//		SDL_RenderCopy(m_pRenderer, m_pBGText, BgArray[i].GetSrcP(), BgArray[i].GetDstP());
 }
 
 void Engine::Clean()

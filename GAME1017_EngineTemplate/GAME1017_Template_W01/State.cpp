@@ -1,5 +1,6 @@
 #include "State.h"
 #include "Engine.h"
+#include "StateManager.h"
 
 #include <SDL.h>
 #include <SDL_image.h>
@@ -52,18 +53,29 @@ GameState::GameState() {}
 void GameState::Enter()
 {
 	std::cout << "Entering Game." << std::endl;
-	m_pBGText = IMG_LoadTexture(Engine::Instance().GetRenderer(), "Assets/Backgrounds.png");
-	/*m_pBGText = IMG_LoadTexture(Engine::Instance().GetRenderer(), "Assets/Backgrounds.png");*/
+	m_pBGText = IMG_LoadTexture(Engine::Instance().GetRenderer(), "../Assets/Backgrounds.png");
+	BgArray[0] = { {0,0,1024,768}, {0,0,1024,768} };
+	BgArray[1] = { {0,0,1024,768}, {1024,0,1024,768} };
 }
 
 void GameState::Update()
 {
+	////ChangeStates
 	if (Engine::Instance().KeyDown(SDL_SCANCODE_T))
 		Engine::Instance().GetStateManager().ChangeState(new TitleState());
 	else if (Engine::Instance().KeyDown(SDL_SCANCODE_P))
 		Engine::Instance().GetStateManager().ChangeState(new PauseState());
 	else if (Engine::Instance().KeyDown(SDL_SCANCODE_E))
 		Engine::Instance().GetStateManager().ChangeState(new EndState());
+	//Background Scrolling
+	for (int i = 0; i < 2; i++)
+		BgArray[i].GetDstP()->x -= BGSCROLL;
+	if (BgArray[1].GetDstP()->x <= 0)
+	{
+		BgArray[0].GetDstP()->x = 0;
+		BgArray[1].GetDstP()->x = 1024;
+	}
+	
 }
 
 void GameState::Render()
@@ -71,8 +83,9 @@ void GameState::Render()
 	std::cout << "Rendering Game." << std::endl;
 	SDL_SetRenderDrawColor(Engine::Instance().GetRenderer(), 0, 0, 0, 255);
 	SDL_RenderClear(Engine::Instance().GetRenderer());
-	//Background
-	SDL_RenderCopy(Engine::Instance().GetRenderer(), m_pBGText, BgArray[i]);
+	////Background
+	for(int i =0;i<2;i++)
+		SDL_RenderCopy(Engine::Instance().GetRenderer(), m_pBGText, BgArray[i].GetSrcP(), BgArray[i].GetDstP());
 	if (dynamic_cast<GameState*>(Engine::Instance().GetStateManager().GetStates().back()))
 		State::Render();
 }
@@ -143,68 +156,3 @@ void EndState::Exit()
 	std::cout << "Restarting" << std::endl;
 }
 
-//StateManager
-StateManager::StateManager()
-{
-}
-
-StateManager::~StateManager()
-{
-}
-
-void StateManager::Update()
-{
-	if (!m_vStates.empty())
-		m_vStates.back()->Update();
-
-}
-
-void StateManager::Render()
-{
-	if (!m_vStates.empty())
-		m_vStates.back()->Render();
-}
-
-void StateManager::ChangeState(State* pState)
-{
-	if (!m_vStates.empty())
-	{
-		m_vStates.back()->Exit();
-		delete m_vStates.back();
-		m_vStates.back() = nullptr;
-		m_vStates.pop_back();
-	}
-	pState->Enter();
-	m_vStates.push_back(pState);
-}
-
-void StateManager::PushState(State* pState)
-{
-	pState->Enter();
-	m_vStates.push_back(pState);
-}
-
-void StateManager::PopState()//Pause to Game
-{
-	if (!m_vStates.empty())
-	{
-		m_vStates.back()->Exit();
-		delete m_vStates.back();
-		m_vStates.back() = nullptr;
-		m_vStates.pop_back();
-	}
-	m_vStates.back()->Resume();
-}
-
-void StateManager::Clean()
-{
-	while (!m_vStates.empty())
-	{
-		m_vStates.back()->Exit();
-		delete m_vStates.back();
-		m_vStates.back() = nullptr;
-		m_vStates.pop_back();
-	}
-}
-
-std::vector<State*>& StateManager::GetStates() { return m_vStates; }
