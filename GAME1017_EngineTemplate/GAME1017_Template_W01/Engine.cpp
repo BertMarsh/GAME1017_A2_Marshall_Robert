@@ -87,23 +87,11 @@ bool Engine::KeyDown(SDL_Scancode c)
 void Engine::Update()
 {
 	m_pStateManager->Update();
-	/*for (int i = 0; i < 2; i++)
-		BgArray[i].GetDstP()->x -= BGSCROLL;
-	if (BgArray[1].GetDstP()->x <= 0)
-	{
-		BgArray[0].GetDstP()->x = 0;
-		BgArray[1].GetDstP()->x = 1024;
-	}*/
 }
 
 void Engine::Render()
 {
 	m_pStateManager->Render();
-//	SDL_SetRenderDrawColor(Engine::Instance().GetRenderer(), 0, 0, 0, 255);
-//	SDL_RenderClear(Engine::Instance().GetRenderer());
-//	//Background
-//	for (int i = 0; i < 2; i++)
-//		SDL_RenderCopy(m_pRenderer, m_pBGText, BgArray[i].GetSrcP(), BgArray[i].GetDstP());
 }
 
 void Engine::Clean()

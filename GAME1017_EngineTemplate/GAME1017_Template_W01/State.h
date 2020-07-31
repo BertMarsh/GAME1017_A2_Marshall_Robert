@@ -32,7 +32,9 @@ class GameState : public State
 {
 private:
 	SDL_Texture* m_pBGText;
+	SDL_Texture* m_pFGText;
 	Sprite BgArray[2];
+	Sprite FgArray[3];
 public:
 	GameState();
 	void Enter();

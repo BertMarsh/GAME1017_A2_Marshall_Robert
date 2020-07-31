@@ -10,7 +10,8 @@
 #include <iostream>
 #include <vector>
 
-#define BGSCROLL 2
+#define BGSCROLL 1
+#define FGSCROLL 2
 #define PSPEED 5
 
 
@@ -53,9 +54,17 @@ GameState::GameState() {}
 void GameState::Enter()
 {
 	std::cout << "Entering Game." << std::endl;
-	m_pBGText = IMG_LoadTexture(Engine::Instance().GetRenderer(), "../Assets/Backgrounds.png");
+	
+	m_pBGText = IMG_LoadTexture(Engine::Instance().GetRenderer(), "../Assets/Background.png");
 	BgArray[0] = { {0,0,1024,768}, {0,0,1024,768} };
 	BgArray[1] = { {0,0,1024,768}, {1024,0,1024,768} };
+	
+	m_pFGText = IMG_LoadTexture(Engine::Instance().GetRenderer(), "../Assets/Platform.png");
+	FgArray[0] = { {0,0,1024,257}, {0,0,1024,257} };
+	//FgArray[1] = { {0,0,1024,768}, {504,0,1024,768} };
+	//FgArray[2] = { {0,0,1024,768}, {1008,0,1024,768} };
+	
+	
 }
 
 void GameState::Update()
@@ -75,7 +84,14 @@ void GameState::Update()
 		BgArray[0].GetDstP()->x = 0;
 		BgArray[1].GetDstP()->x = 1024;
 	}
-	
+	//Foreground
+	for (int i = 0; i < 2; i++)
+		FgArray[i].GetDstP()->x -= FGSCROLL;
+	if (FgArray[1].GetDstP()->x <= 0)
+	{
+		FgArray[0].GetDstP()->x = 0;
+		FgArray[1].GetDstP()->x = 504;
+	}
 }
 
 void GameState::Render()
@@ -86,6 +102,9 @@ void GameState::Render()
 	////Background
 	for(int i =0;i<2;i++)
 		SDL_RenderCopy(Engine::Instance().GetRenderer(), m_pBGText, BgArray[i].GetSrcP(), BgArray[i].GetDstP());
+	//Foreground
+	for (int i = 0; i < 2; i++)
+		SDL_RenderCopy(Engine::Instance().GetRenderer(), m_pFGText, FgArray[i].GetSrcP(), FgArray[i].GetDstP());
 	if (dynamic_cast<GameState*>(Engine::Instance().GetStateManager().GetStates().back()))
 		State::Render();
 }
