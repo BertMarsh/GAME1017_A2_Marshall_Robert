@@ -10,8 +10,9 @@
 #include <iostream>
 #include <vector>
 
-#define BGSCROLL 1
-#define FGSCROLL 2
+#define BGSCROLL 0
+#define FGSCROLL 0
+#define PSCROLL 0
 #define PSPEED 5
 
 
@@ -63,8 +64,12 @@ void GameState::Enter()
 	FgArray[0] = { {0,0,1024,257}, {0,600,1024,257} };
 	FgArray[1] = { {0,0,1024,257}, {1024,600,1024,257} };
 	//Pilars
-	
-	
+	m_pPText = IMG_LoadTexture(Engine::Instance().GetRenderer(), "../Assets/Pillars.png");
+	PArray[0] = { {0,0,525,511}, {0,0,550,600} };
+	PArray[1] = { {0,0,525,511}, {275,0,550,600} };
+	PArray[2] = { {0,0,525,511}, {550,0,550,600} };
+	PArray[3] = { {0,0,525,511}, {825,0,550,600} };
+	PArray[4] = { {0,0,525,511}, {1100,0,550,600} };
 }
 
 void GameState::Update()
@@ -90,7 +95,18 @@ void GameState::Update()
 	if (FgArray[1].GetDstP()->x <= 0)
 	{
 		FgArray[0].GetDstP()->x = 0;
-		FgArray[1].GetDstP()->x = 504;
+		FgArray[1].GetDstP()->x = 1024;
+	}
+	//Pillars
+	for (int i = 0; i < 5; i++)
+		PArray[i].GetDstP()->x -= PSCROLL;
+	if (PArray[1].GetDstP()->x <= 0)
+	{
+		PArray[0].GetDstP()->x = 0;
+		PArray[1].GetDstP()->x = 275;
+		PArray[2].GetDstP()->x = 550;
+		PArray[3].GetDstP()->x = 825;
+		PArray[4].GetDstP()->x = 1100;
 	}
 }
 
@@ -105,6 +121,10 @@ void GameState::Render()
 	//Foreground
 	for (int i = 0; i < 2; i++)
 		SDL_RenderCopy(Engine::Instance().GetRenderer(), m_pFGText, FgArray[i].GetSrcP(), FgArray[i].GetDstP());
+	//Pillars
+	for (int i = 0; i < 5; i++)
+		SDL_RenderCopy(Engine::Instance().GetRenderer(), m_pPText, PArray[i].GetSrcP(), PArray[i].GetDstP());
+	
 	if (dynamic_cast<GameState*>(Engine::Instance().GetStateManager().GetStates().back()))
 		State::Render();
 }
