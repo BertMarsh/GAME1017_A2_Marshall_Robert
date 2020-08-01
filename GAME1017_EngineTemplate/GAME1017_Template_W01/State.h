@@ -37,10 +37,15 @@ private:
 	Sprite BgArray[2];
 	Sprite FgArray[2];
 	Sprite PArray[5];
+	SDL_Texture* m_pSprText;
+	Player* m_pPlayer;
+
+	SDL_Point m_pivot;
 public:
 	GameState();
 	void Enter();
 	void Update();
+	void CheckCollision();
 	void Render();
 	void Resume();
 	void Exit();

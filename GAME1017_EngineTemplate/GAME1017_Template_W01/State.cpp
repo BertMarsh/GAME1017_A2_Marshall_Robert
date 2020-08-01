@@ -13,7 +13,10 @@
 #define BGSCROLL 0
 #define FGSCROLL 0
 #define PSCROLL 0
-#define PSPEED 5
+#define PSPEED 0
+
+#define WIDTH 1024
+#define HEIGHT 768
 
 
 //Base
@@ -70,17 +73,17 @@ void GameState::Enter()
 	PArray[2] = { {0,0,525,511}, {550,0,550,600} };
 	PArray[3] = { {0,0,525,511}, {825,0,550,600} };
 	PArray[4] = { {0,0,525,511}, {1100,0,550,600} };
+	//Player
+	m_pSprText = IMG_LoadTexture(Engine::Instance().GetRenderer(), "../Assets/Player.png");
+	m_pPlayer = new Player({0,0,128,128}, {50,475,128,128});
 }
 
 void GameState::Update()
 {
 	////ChangeStates
-	if (Engine::Instance().KeyDown(SDL_SCANCODE_T))
-		Engine::Instance().GetStateManager().ChangeState(new TitleState());
-	else if (Engine::Instance().KeyDown(SDL_SCANCODE_P))
+	if (Engine::Instance().KeyDown(SDL_SCANCODE_P))
 		Engine::Instance().GetStateManager().ChangeState(new PauseState());
-	else if (Engine::Instance().KeyDown(SDL_SCANCODE_E))
-		Engine::Instance().GetStateManager().ChangeState(new EndState());
+	
 	//Background Scrolling
 	for (int i = 0; i < 2; i++)
 		BgArray[i].GetDstP()->x -= BGSCROLL;
@@ -108,6 +111,12 @@ void GameState::Update()
 		PArray[3].GetDstP()->x = 825;
 		PArray[4].GetDstP()->x = 1100;
 	}
+	//Player
+	//m_pPlayer->Animate();
+	if (Engine::Instance().KeyDown(SDL_SCANCODE_A) && m_pPlayer->GetDstP()->x, m_pPlayer->GetDstP()->h)
+		m_pPlayer->GetDstP()->x -= PSPEED;
+	else if (Engine::Instance().KeyDown(SDL_SCANCODE_D) && m_pPlayer->GetDstP()->x < WIDTH/2)
+		m_pPlayer->GetDstP()->x += PSPEED;
 }
 
 void GameState::Render()
@@ -124,6 +133,9 @@ void GameState::Render()
 	//Pillars
 	for (int i = 0; i < 5; i++)
 		SDL_RenderCopy(Engine::Instance().GetRenderer(), m_pPText, PArray[i].GetSrcP(), PArray[i].GetDstP());
+	//Player
+	SDL_RenderCopy(Engine::Instance().GetRenderer(), m_pSprText, m_pPlayer->GetSrcP(), m_pPlayer->GetDstP());
+	
 	
 	if (dynamic_cast<GameState*>(Engine::Instance().GetStateManager().GetStates().back()))
 		State::Render();

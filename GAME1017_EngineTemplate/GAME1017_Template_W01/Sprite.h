@@ -33,5 +33,6 @@ public:
 
 class Player : public AnimatedSprite
 {
-
+public: 
+	Player(SDL_Rect s, SDL_Rect d);
 };

@@ -7,6 +7,7 @@ Sprite::Sprite(){}
 Sprite::Sprite(SDL_Rect s, SDL_Rect d) :m_rSrc(s), m_rDst(d){}
 SDL_Rect* Sprite::GetSrcP() { return &m_rSrc; }
 SDL_Rect* Sprite::GetDstP() { return &m_rDst; }
+double Sprite::GetAngle() { return m_angle; }
 
 AnimatedSprite::AnimatedSprite(int a, int fm, int sm, SDL_Rect s, SDL_Rect d) :
 	Sprite(s, d), m_iFrameMax(fm), m_iSpriteMax(sm)
@@ -30,3 +31,4 @@ void AnimatedSprite::Animate()
 	m_rSrc.x = m_rSrc.w * m_iSprite;
 }
 
+Player::Player(SDL_Rect s, SDL_Rect d) : AnimatedSprite(90, 8, 4, s, d){}

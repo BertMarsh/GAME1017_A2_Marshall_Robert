@@ -2,6 +2,7 @@
 #include "StateManager.h"
 
 #include <iostream>
+
 #define WIDTH 1024
 #define HEIGHT 768
 #define FPS 60
