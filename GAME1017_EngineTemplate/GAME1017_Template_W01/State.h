@@ -45,7 +45,6 @@ public:
 	GameState();
 	void Enter();
 	void Update();
-	void CheckCollision();
 	void Render();
 	void Resume();
 	void Exit();

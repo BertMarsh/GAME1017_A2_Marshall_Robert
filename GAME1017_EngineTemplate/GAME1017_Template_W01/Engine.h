@@ -21,9 +21,6 @@ private: // Private properties.
 	SDL_Window* m_pWindow; // This represents the SDL window.
 	SDL_Renderer* m_pRenderer; // This represents the buffer to draw to.
 	StateManager* m_pStateManager;
-	
-	/*SDL_Texture* m_pBGText;
-	Sprite BgArray[2];*/
 
 private: // Private methods.
 	Engine();
@@ -41,5 +38,6 @@ public: // Public methods.
 	bool KeyDown(SDL_Scancode c);
 	SDL_Renderer* GetRenderer();
 	StateManager& GetStateManager();
+	bool& Running();
 	
 };

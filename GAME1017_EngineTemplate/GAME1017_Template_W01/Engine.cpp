@@ -1,5 +1,6 @@
 #include "Engine.h"
 #include "StateManager.h"
+#include "EventManager.h"
 
 #include <iostream>
 
@@ -55,21 +56,7 @@ void Engine::Sleep()
 
 void Engine::HandleEvents()
 {
-	SDL_Event event;
-
-	while (SDL_PollEvent(&event))
-	{
-		switch (event.type)
-		{
-		case SDL_QUIT: // User pressed window's 'x' button.
-			m_bRunning = false;
-			break;
-		case SDL_KEYDOWN: // Try SDL_KEYUP instead.
-			if (event.key.keysym.sym == SDLK_ESCAPE)
-				m_bRunning = false;
-			break;
-		}
-	}
+	EventManager::HandleEvents();
 }
 
 // Keyboard utility function.
@@ -133,3 +120,4 @@ Engine& Engine::Instance()
 
 SDL_Renderer* Engine::GetRenderer() { return m_pRenderer; }
 StateManager& Engine::GetStateManager() { return *m_pStateManager; }
+bool& Engine::Running() { return m_bRunning; }

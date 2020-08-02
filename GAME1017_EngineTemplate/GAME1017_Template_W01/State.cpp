@@ -113,10 +113,7 @@ void GameState::Update()
 	}
 	//Player
 	//m_pPlayer->Animate();
-	if (Engine::Instance().KeyDown(SDL_SCANCODE_A) && m_pPlayer->GetDstP()->x, m_pPlayer->GetDstP()->h)
-		m_pPlayer->GetDstP()->x -= PSPEED;
-	else if (Engine::Instance().KeyDown(SDL_SCANCODE_D) && m_pPlayer->GetDstP()->x < WIDTH/2)
-		m_pPlayer->GetDstP()->x += PSPEED;
+
 }
 
 void GameState::Render()
