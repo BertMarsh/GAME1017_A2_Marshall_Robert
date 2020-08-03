@@ -5,6 +5,8 @@
 #include <iostream>
 #include <vector>
 
+#define Gravit
+
 class Sprite 
 {
 protected:
@@ -12,7 +14,6 @@ protected:
 	SDL_Rect m_rDst;
 	int m_x, m_y, m_angle;
 public:
-	Sprite();
 	Sprite(SDL_Rect s, SDL_Rect d);
 	SDL_Rect* GetSrcP();
 	SDL_Rect* GetDstP();
@@ -34,5 +35,5 @@ public:
 class Player : public AnimatedSprite
 {
 public: 
-	Player(SDL_Rect s, SDL_Rect d);
-};
+	Player(SDL_Rect s, SDL_Rect d); 
+	

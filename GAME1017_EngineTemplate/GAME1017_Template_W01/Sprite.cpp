@@ -1,9 +1,10 @@
-#include <algorithm>
-#include<cmath>
 #include "Sprite.h"
 #include "Engine.h"
 
-Sprite::Sprite(){}
+#include <algorithm>
+#include<cmath>
+
+
 Sprite::Sprite(SDL_Rect s, SDL_Rect d) :m_rSrc(s), m_rDst(d){}
 SDL_Rect* Sprite::GetSrcP() { return &m_rSrc; }
 SDL_Rect* Sprite::GetDstP() { return &m_rDst; }
@@ -31,4 +32,7 @@ void AnimatedSprite::Animate()
 	m_rSrc.x = m_rSrc.w * m_iSprite;
 }
 
-Player::Player(SDL_Rect s, SDL_Rect d) : AnimatedSprite(90, 8, 4, s, d){}
+Player::Player(SDL_Rect s, SDL_Rect d) : AnimatedSprite(90, 8, 4, s, d)
+{
+}
+

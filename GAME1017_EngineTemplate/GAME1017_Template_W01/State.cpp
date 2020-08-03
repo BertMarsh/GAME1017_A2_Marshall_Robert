@@ -1,6 +1,7 @@
 #include "State.h"
 #include "Engine.h"
 #include "StateManager.h"
+#include "EventManager.h"
 
 #include <SDL.h>
 #include <SDL_image.h>
@@ -112,7 +113,10 @@ void GameState::Update()
 		PArray[4].GetDstP()->x = 1100;
 	}
 	//Player
-	//m_pPlayer->Animate();
+	if (KeyDown(SDL_SCANCODE A) && m_pPlayer->GetDstP()->x > m_pPlayer->GetDstP()->h)
+		m_pPlayer->GetDstP()-> -= PSPEED;
+	else if (KeyDown(SDL_SCANCODE_D) && m_pPlayer->GetDstP()->x < WIDTH / 2)
+		m_pPlayer->GetDstP()->x += PSPEED;
 
 }
 
