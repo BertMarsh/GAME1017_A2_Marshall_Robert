@@ -2,7 +2,6 @@
 #include "Engine.h"
 #include "StateManager.h"
 
-
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_mixer.h>
@@ -133,6 +132,10 @@ void GameState::Update()
 		m_pPlayer->Animate();
 	}
 
+}
+
+void GameState::CheckCollision()
+{ 
 }
 
 void GameState::Render()
