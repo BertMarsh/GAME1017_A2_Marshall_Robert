@@ -1,7 +1,7 @@
 #include "State.h"
 #include "Engine.h"
 #include "StateManager.h"
-#include "EventManager.h"
+
 
 #include <SDL.h>
 #include <SDL_image.h>
@@ -11,10 +11,12 @@
 #include <iostream>
 #include <vector>
 
-#define BGSCROLL 0
-#define FGSCROLL 0
-#define PSCROLL 0
-#define PSPEED 0
+#define BGSCROLL 1
+#define MGSCROLL 2
+#define FGSCROLL 3
+#define PSPEED 7
+#define JUMPSTR 10.0
+#define GRAVITY 10.0
 
 #define WIDTH 1024
 #define HEIGHT 768
@@ -74,9 +76,11 @@ void GameState::Enter()
 	PArray[2] = { {0,0,525,511}, {550,0,550,600} };
 	PArray[3] = { {0,0,525,511}, {825,0,550,600} };
 	PArray[4] = { {0,0,525,511}, {1100,0,550,600} };
-	//Player
+	//Player Running
 	m_pSprText = IMG_LoadTexture(Engine::Instance().GetRenderer(), "../Assets/Player.png");
-	m_pPlayer = new Player({0,0,128,128}, {50,475,128,128});
+	m_pPlayer = new Player({0,0,128,128}, {25,475,128,128});
+	//Player Jumping
+	//m_pPlayer = new Player({}, {});
 }
 
 void GameState::Update()
@@ -85,7 +89,7 @@ void GameState::Update()
 	if (Engine::Instance().KeyDown(SDL_SCANCODE_P))
 		Engine::Instance().GetStateManager().ChangeState(new PauseState());
 	
-	//Background Scrolling
+	//Scrolling
 	for (int i = 0; i < 2; i++)
 		BgArray[i].GetDstP()->x -= BGSCROLL;
 	if (BgArray[1].GetDstP()->x <= 0)
@@ -103,7 +107,7 @@ void GameState::Update()
 	}
 	//Pillars
 	for (int i = 0; i < 5; i++)
-		PArray[i].GetDstP()->x -= PSCROLL;
+		PArray[i].GetDstP()->x -= MGSCROLL;
 	if (PArray[1].GetDstP()->x <= 0)
 	{
 		PArray[0].GetDstP()->x = 0;
@@ -113,10 +117,21 @@ void GameState::Update()
 		PArray[4].GetDstP()->x = 1100;
 	}
 	//Player
-	if (KeyDown(SDL_SCANCODE A) && m_pPlayer->GetDstP()->x > m_pPlayer->GetDstP()->h)
-		m_pPlayer->GetDstP()-> -= PSPEED;
-	else if (KeyDown(SDL_SCANCODE_D) && m_pPlayer->GetDstP()->x < WIDTH / 2)
+	if (Engine::Instance().KeyDown(SDL_SCANCODE_A) && m_pPlayer->GetDstP()->x > m_pPlayer->GetDstP()->h)
+	{
+		m_pPlayer->GetDstP()->x -= PSPEED;
+		m_pPlayer->Animate();
+	}
+	else if (Engine::Instance().KeyDown(SDL_SCANCODE_D) && m_pPlayer->GetDstP()->x < WIDTH / 2)
+	{
 		m_pPlayer->GetDstP()->x += PSPEED;
+		m_pPlayer->Animate();
+	}
+	else if (Engine::Instance().KeyDown(SDL_SCANCODE_SPACE) && m_pPlayer->GetDstP()->y > m_pPlayer->GetDstP()->h)
+	{
+		m_pPlayer->GetDstP()->y -= JUMPSTR;
+		m_pPlayer->Animate();
+	}
 
 }
 

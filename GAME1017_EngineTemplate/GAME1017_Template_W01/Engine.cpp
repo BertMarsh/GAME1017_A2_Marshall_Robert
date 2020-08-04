@@ -1,6 +1,5 @@
 #include "Engine.h"
 #include "StateManager.h"
-#include "EventManager.h"
 
 #include <iostream>
 
@@ -56,7 +55,21 @@ void Engine::Sleep()
 
 void Engine::HandleEvents()
 {
-	EventManager::HandleEvents();
+	SDL_Event event;
+
+	while (SDL_PollEvent(&event))
+	{
+		switch(event.type)
+		{
+		case SDL_QUIT:
+			m_bRunning = false;
+			break;
+		case SDL_KEYDOWN:
+			if (event.key.keysym.sym == SDLK_ESCAPE)
+				m_bRunning == false;
+			break;
+		}
+	}
 }
 
 // Keyboard utility function.

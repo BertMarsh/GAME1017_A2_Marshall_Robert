@@ -5,34 +5,65 @@
 #include<cmath>
 
 
-Sprite::Sprite(SDL_Rect s, SDL_Rect d) :m_rSrc(s), m_rDst(d){}
-SDL_Rect* Sprite::GetSrcP() { return &m_rSrc; }
-SDL_Rect* Sprite::GetDstP() { return &m_rDst; }
-double Sprite::GetAngle() { return m_angle; }
-
-AnimatedSprite::AnimatedSprite(int a, int fm, int sm, SDL_Rect s, SDL_Rect d) :
-	Sprite(s, d), m_iFrameMax(fm), m_iSpriteMax(sm)
+Player::Player(SDL_Rect s, SDL_Rect d, SDL_Renderer* r, SDL_Texture* t) 
+	: AnimatedSprite(90, 8, 4, s, d, r, t)
 {
-	m_angle = a;
-	m_iSprite = m_iFrame = 0;
+	
+	
 }
 
-void AnimatedSprite::Animate()
+void Player::Update()
 {
-	m_iFrame++;
-	if (m_iFrame == m_iFrameMax)
-	{
-		m_iFrame = 0;
-		m_iSprite++;
-		if (m_iSprite == m_iSpriteMax)
-		{
-			m_iSprite = 0;
-		}
-	}
-	m_rSrc.x = m_rSrc.w * m_iSprite;
 }
 
-Player::Player(SDL_Rect s, SDL_Rect d) : AnimatedSprite(90, 8, 4, s, d)
+void Player::Render()
+{
+}
+
+void Player::Stop()
+{
+}
+
+void Player::StopX()
+{
+}
+
+void Player::StopY()
+{
+}
+
+void Player::SetAccelX(double a)
+{
+}
+
+void Player::SetAccelY(double a)
+{
+}
+
+bool Player::isGrounded()
+{
+	return false;
+}
+
+void Player::SetGrounded(bool g)
+{
+}
+
+double Player::GetVelX()
+{
+	return 0.0;
+}
+
+double Player::GetVelY()
+{
+	return 0.0;
+}
+
+void Player::SetX(float y)
+{
+}
+
+void Player::SetY(float y)
 {
 }
 

@@ -23,10 +23,10 @@
 //
 //void TextureManager::Quit()
 //{
-//	/*for (auto const& i : v_Textures)
+//	for (auto const& i : v_Textures)
 //	{
 //		SDL_DestroyTexture(v_Textures)
-//	}*/
+//	}
 //	v_Textures.clear();
 //}
 //
