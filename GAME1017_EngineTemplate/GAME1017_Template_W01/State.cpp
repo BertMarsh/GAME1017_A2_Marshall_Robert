@@ -37,6 +37,8 @@ TitleState::TitleState() {}
 void TitleState::Enter()
 {
 	std::cout << "Welcome to the game! \n" << "Entering TitleState" << std::endl;
+	m_BText = IMG_LoadTexture(Engine::Instance().GetRenderer(), "../Assets/StartButton.png");
+	m_PlayB = { {0,0,372,195}, {315,400,372,195} };
 }
 
 void TitleState::Update()
@@ -47,8 +49,9 @@ void TitleState::Update()
 
 void TitleState::Render()
 {
-	SDL_SetRenderDrawColor(Engine::Instance().GetRenderer(), 0, 0, 0, 255);
+	SDL_SetRenderDrawColor(Engine::Instance().GetRenderer(), 255, 255, 255, 255);
 	SDL_RenderClear(Engine::Instance().GetRenderer());
+	SDL_RenderCopy(Engine::Instance().GetRenderer(), m_BText, m_PlayB.GetSrcP(), m_PlayB.GetDstP());
 	State::Render();
 }
 

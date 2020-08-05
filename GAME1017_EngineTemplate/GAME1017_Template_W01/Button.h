@@ -18,6 +18,8 @@ protected:
 class PlayButton :public Button
 {
 private:
+	Sprite* m_PlayB;
+private:
 	void Execute();
 public:
 	PlayButton(SDL_Rect src, SDL_Rect dst, SDL_Renderer* r, SDL_Texture* t);
@@ -25,5 +27,21 @@ public:
 
 class RestartButton :public Button
 {
+private:
+	Sprite* m_pMenuB;
 
+private:
+	void Execute();
+public:
+	RestartButton(SDL_Rect src, SDL_Rect dst, SDL_Renderer* r, SDL_Texture* t);
+};
+
+class ResumeButton :public Button
+{
+private:
+	Sprite* m_pResumeB;
+private:
+	void Execute();
+public:
+	ResumeButton(SDL_Rect src, SDL_Rect dst, SDL_Renderer* r, SDL_Texture t);
 };

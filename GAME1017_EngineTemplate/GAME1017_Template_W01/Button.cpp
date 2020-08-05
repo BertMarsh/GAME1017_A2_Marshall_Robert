@@ -1,6 +1,7 @@
-#include <SDL.h>
+/*#include *//*<SDL.h>
 
 #include "Button.h"
+#include "Engine.h"
 #include "EventManager.h"
 
 Button::Button(SDL_Rect s, SDL_Rect d, SDL_Renderer* r, SDL_Texture* t)
@@ -47,5 +48,6 @@ int Button::Update()
 void Button::Render()
 {
 	m_rSrc.x = m_rSrc.w * (int)m_state;
-	SDL_RenderCopy
-}
+	SDL_RenderCopy(Engine::Instance().GetRenderer(), GetSrcP(), GetDstP() -
+
+}*/

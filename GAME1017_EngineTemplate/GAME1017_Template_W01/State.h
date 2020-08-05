@@ -4,6 +4,7 @@
 #include "Sprite.h"
 #include "Player.h"
 #include "Obstacles.h"
+#include "Button.h"
 
 
 
@@ -22,6 +23,9 @@ public:
 
 class TitleState : public State
 {
+private:
+	SDL_Texture* m_BText;
+	Sprite m_PlayB;
 public:
 	TitleState();
 	void Enter();
