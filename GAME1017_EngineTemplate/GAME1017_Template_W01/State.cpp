@@ -1,6 +1,7 @@
 #include "State.h"
 #include "Engine.h"
 #include "StateManager.h"
+#include "EventManager.h"
 
 #include <SDL.h>
 #include <SDL_image.h>
@@ -9,6 +10,8 @@
 
 #include <iostream>
 #include <vector>
+#include <ctime>
+#include <cstdlib>
 
 #define BGSCROLL 1
 #define MGSCROLL 2
@@ -44,7 +47,7 @@ void TitleState::Update()
 
 void TitleState::Render()
 {
-	SDL_SetRenderDrawColor(Engine::Instance().GetRenderer(), 128, 45, 0, 255);
+	SDL_SetRenderDrawColor(Engine::Instance().GetRenderer(), 0, 0, 0, 255);
 	SDL_RenderClear(Engine::Instance().GetRenderer());
 	State::Render();
 }
@@ -60,15 +63,16 @@ GameState::GameState() {}
 void GameState::Enter()
 {
 	std::cout << "Entering Game." << std::endl;
+	//All Sprites
 	//Background
 	m_pBGText = IMG_LoadTexture(Engine::Instance().GetRenderer(), "../Assets/Background.png");
 	BgArray[0] = { {0,0,1024,768}, {0,0,1024,768} };
 	BgArray[1] = { {0,0,1024,768}, {1024,0,1024,768} };
-	//Foreground
+	//Midground
 	m_pFGText = IMG_LoadTexture(Engine::Instance().GetRenderer(), "../Assets/Platform.png");
 	FgArray[0] = { {0,0,1024,257}, {0,600,1024,257} };
 	FgArray[1] = { {0,0,1024,257}, {1024,600,1024,257} };
-	//Pilars
+	//Foreground
 	m_pPText = IMG_LoadTexture(Engine::Instance().GetRenderer(), "../Assets/Pillars.png");
 	PArray[0] = { {0,0,525,511}, {0,0,550,600} };
 	PArray[1] = { {0,0,525,511}, {275,0,550,600} };
@@ -78,8 +82,6 @@ void GameState::Enter()
 	//Player Running
 	m_pSprText = IMG_LoadTexture(Engine::Instance().GetRenderer(), "../Assets/Player.png");
 	m_pPlayer = new Player({0,0,128,128}, {25,475,128,128});
-	//Player Jumping
-	//m_pPlayer = new Player({}, {});
 }
 
 void GameState::Update()
@@ -131,7 +133,17 @@ void GameState::Update()
 		m_pPlayer->GetDstP()->y -= JUMPSTR;
 		m_pPlayer->Animate();
 	}*/
-	
+	else if (Engine::Instance().KeyDown(SDL_SCANCODE_S) && m_pPlayer->GetDstP()->y > m_pPlayer->GetDstP()->h)
+	{
+		m_pPlayer = new Player({ 128,128,128,128 }, { 25,475,128,128 });
+		m_pPlayer->Animate();
+	}
+	else if (Engine::Instance().KeyDown(SDL_SCANCODE_S) && m_pPlayer->GetDstP()->y > m_pPlayer->GetDstP()->h)
+	{
+		m_pPlayer = new Player({ 0,0,128,128 }, { 25,475,128,128 });
+	}
+	//Obstacles
+
 }
 
 void GameState::CheckCollision()

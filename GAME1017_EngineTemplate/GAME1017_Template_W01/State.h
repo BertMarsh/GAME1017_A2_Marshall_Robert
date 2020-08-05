@@ -2,6 +2,8 @@
 #include <SDL.h>
 
 #include "Sprite.h"
+#include "Player.h"
+#include "Obstacles.h"
 
 
 
@@ -40,7 +42,6 @@ private:
 	SDL_Texture* m_pSprText;
 	Player* m_pPlayer;
 	SDL_Point m_pivot;
-
 	
 public:
 	GameState();

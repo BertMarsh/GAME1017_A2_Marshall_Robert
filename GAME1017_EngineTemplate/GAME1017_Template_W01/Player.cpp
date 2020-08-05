@@ -4,8 +4,8 @@
 #include "Player.h"
 #include "Engine.h"
 
-Player::Player(SDL_Rect s, SDL_Rect d, SDL_Renderer* r, SDL_Texture* t)
-	:Sprite(s,d)
+Player::Player(SDL_Rect s, SDL_Rect d)
+	:AnimatedSprite(90, 8, 4, s,d)
 {
 	m_grounded = false;
 	m_accelX = m_accelY = m_VelX = m_VelY = 0.0;

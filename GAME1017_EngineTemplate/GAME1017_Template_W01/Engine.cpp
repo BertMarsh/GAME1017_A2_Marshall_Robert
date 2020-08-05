@@ -61,6 +61,20 @@ void Engine::HandleEvents()
 	EventManager::HandleEvents();
 }
 
+// Keyboard utility function.
+bool Engine::KeyDown(SDL_Scancode c)
+{
+	if (m_iKeystates != nullptr)
+	{
+		if (m_iKeystates[c] == 1)
+			return true;
+		else
+			return false;
+	}
+	return false;
+}
+
+
 void Engine::Update()
 {
 	m_pStateManager->Update();

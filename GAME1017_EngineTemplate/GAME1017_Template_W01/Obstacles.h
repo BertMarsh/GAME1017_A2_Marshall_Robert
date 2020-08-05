@@ -7,9 +7,8 @@
 class Obstacles : public Sprite
 {
 private:
-	std::vector<Obstacles*> m_Obstacles;
-
-
+	int m_Obstacles;
+	SDL_Texture* ObsText;
 public:
 	Obstacles(SDL_Rect s, SDL_Rect d) :Sprite(s, d) {}
 	void Spawn();

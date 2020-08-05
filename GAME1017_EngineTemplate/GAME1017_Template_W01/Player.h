@@ -4,7 +4,7 @@
 #define GRAVITY 5.0
 #define JUMPSTR 50.0
 
-class Player : public Sprite
+class Player : public AnimatedSprite
 {
 private:
 	
@@ -19,7 +19,7 @@ private:
 		m_drag,
 		m_grav;
 public:
-	Player(SDL_Rect s, SDL_Rect d, SDL_Renderer* r, SDL_Texture* t);
+	Player(SDL_Rect s, SDL_Rect d);
 	void Update(bool sX, bool sY);
 	void Stop();
 	void StopX();
