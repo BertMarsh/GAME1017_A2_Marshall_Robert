@@ -14,8 +14,8 @@
 #define MGSCROLL 2
 #define FGSCROLL 3
 #define PSPEED 7
-#define JUMPSTR 10.0
-#define GRAVITY 10.0
+//#define JUMPSTR 10.0
+//#define GRAVITY 10.0
 
 #define WIDTH 1024
 #define HEIGHT 768
@@ -126,17 +126,19 @@ void GameState::Update()
 		m_pPlayer->GetDstP()->x += PSPEED;
 		m_pPlayer->Animate();
 	}
-	else if (Engine::Instance().KeyDown(SDL_SCANCODE_SPACE) && m_pPlayer->GetDstP()->y > m_pPlayer->GetDstP()->h)
+	/*else if (Engine::Instance().KeyDown(SDL_SCANCODE_SPACE) && m_pPlayer->GetDstP()->y > m_pPlayer->GetDstP()->h)
 	{
 		m_pPlayer->GetDstP()->y -= JUMPSTR;
 		m_pPlayer->Animate();
-	}
-
+	}*/
+	
 }
 
 void GameState::CheckCollision()
 { 
 }
+
+
 
 void GameState::Render()
 {

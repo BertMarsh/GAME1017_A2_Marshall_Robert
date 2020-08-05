@@ -4,11 +4,11 @@
 
 #include "Obstacles.h"
 
-void Obstacles::Spawn()
-{
-	switch(m_Obstacles)
-}
-
-void Obstacles::Update()
-{
-}
+//void Obstacles::Spawn()
+//{
+//	switch(m_Obstacles)
+//}
+//
+//void Obstacles::Update()
+//{
+//}

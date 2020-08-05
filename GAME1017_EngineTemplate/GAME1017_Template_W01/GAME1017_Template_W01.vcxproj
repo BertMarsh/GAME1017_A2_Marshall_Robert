@@ -117,7 +117,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp" />
+    <ClCompile Include="EventManager.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Obstacles.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="State.cpp" />
     <ClCompile Include="StateManager.cpp" />
@@ -125,6 +128,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine.h" />
+    <ClInclude Include="EventManager.h" />
+    <ClInclude Include="Obstacles.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="StateManager.h" />

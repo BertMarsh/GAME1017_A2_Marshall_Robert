@@ -1,7 +1,10 @@
+#include <iostream>
+
 #include "Engine.h"
 #include "StateManager.h"
+#include "EventManager.h"
 
-#include <iostream>
+
 
 #define WIDTH 1024
 #define HEIGHT 768
@@ -24,7 +27,7 @@ bool Engine::Init(const char* title, int xpos, int ypos, int width, int height, 
 			m_pRenderer = SDL_CreateRenderer(m_pWindow, -1, 0);
 			if (m_pRenderer != nullptr) // Renderer init success.
 			{
-				
+				EventManager::Init();
 			}
 			else return false; // Renderer init fail.
 		}
@@ -55,34 +58,7 @@ void Engine::Sleep()
 
 void Engine::HandleEvents()
 {
-	SDL_Event event;
-
-	while (SDL_PollEvent(&event))
-	{
-		switch(event.type)
-		{
-		case SDL_QUIT:
-			m_bRunning = false;
-			break;
-		case SDL_KEYDOWN:
-			if (event.key.keysym.sym == SDLK_ESCAPE)
-				m_bRunning == false;
-			break;
-		}
-	}
-}
-
-// Keyboard utility function.
-bool Engine::KeyDown(SDL_Scancode c)
-{
-	if (m_iKeystates != nullptr)
-	{
-		if (m_iKeystates[c] == 1)
-			return true;
-		else
-			return false;
-	}
-	return false;
+	EventManager::HandleEvents();
 }
 
 void Engine::Update()
@@ -103,6 +79,7 @@ void Engine::Clean()
 	m_pStateManager = nullptr;
 	SDL_DestroyRenderer(m_pRenderer);
 	SDL_DestroyWindow(m_pWindow);
+	EventManager::Quit();
 	SDL_Quit();
 }
 
