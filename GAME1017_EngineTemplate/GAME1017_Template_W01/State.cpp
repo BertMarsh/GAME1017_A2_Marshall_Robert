@@ -1,6 +1,8 @@
 #include "State.h"
 #include "Engine.h"
+#include "Sprite.h"
 #include "Player.h"
+#include "Obstacles.h"
 #include "StateManager.h"
 #include "EventManager.h"
 
@@ -39,7 +41,7 @@ void TitleState::Enter()
 {
 	std::cout << "Welcome to the game! \n" << "Entering TitleState" << std::endl;
 	m_BText = IMG_LoadTexture(Engine::Instance().GetRenderer(), "../Assets/StartButton.png");
-	m_PlayB = { {0,0,372,195}, {315,400,372,195}, m_pRend, m_pText };
+	/*m_PlayB = { {0,0,372,195}, {315,400,372,195}, m_pRend, m_pText, 0.0 };*/
 }
 
 void TitleState::Update()
@@ -62,7 +64,7 @@ void TitleState::Exit()
 }
 
 //GameState
-GameState::GameState() {}
+GameState::GameState() : m_iOSpawn(0), m_iOSpawnMax(3) {}
 
 void GameState::Enter()
 {
@@ -84,7 +86,7 @@ void GameState::Enter()
 	PArray[3] = { {0,0,525,511}, {825,0,550,600}, m_pRend, m_pText };
 	PArray[4] = { {0,0,525,511}, {1100,0,550,600}, m_pRend, m_pText };
 	//Player Running
-	void Player::Render();
+	//void Player::Render();
 }
 
 void GameState::Update()
@@ -94,6 +96,7 @@ void GameState::Update()
 		Engine::Instance().GetStateManager().ChangeState(new PauseState());
 	
 	//Scrolling
+	//Background
 	for (int i = 0; i < 2; i++)
 		BgArray[i].GetDstP()->x -= BGSCROLL;
 	if (BgArray[1].GetDstP()->x <= 0)
@@ -146,11 +149,37 @@ void GameState::Update()
 		m_pPlayer = new Player({ 0,0,128,128 }, { 25,475,128,128 }, m_pRend, m_pText);
 	}
 	//Obstacles
-
+	//Movement
+	for (int i = 0; i < (int)m_vObstacles.size(); i++)
+	{
+		m_vObstacles[i]->Update();
+		if (m_vObstacles[i]->GetDstP->x < -50)
+		{
+			delete m_vObstacles[i];
+			m_vObstacles[i] = nullptr;
+		}
+	}
+	//Obstacle Spawns
+	if (m_iOSpawn++ == m_iOSpawnMax)
+	{
+		m_vObstacles.push_back(new Obstacles({ 132,130, 100, 100 }, {700, 200, 100, 100 }))
+	}
 }
 
 void GameState::CheckCollision()
 { 
+	//Player vs Enemy
+
+	SDL_Rect p = { m_pPlayer->GetDstP()->x - 100, m_pPlayer->GetDstP()->y, 100, 94 };
+	for (int i = 0; i < (int)m_vObstacles.size; i++)
+	{
+		SDL_Rect e = { m_vObstacles[i]->GetDstP()->x, m_vObstacles[i]->GetDstP()->y - 40, 56, 40 };
+		if (SDL_HasIntersection(&p, &e))
+		{
+			std::cout << "You have died" << std::endl;
+			break;
+		}
+	}
 }
 
 

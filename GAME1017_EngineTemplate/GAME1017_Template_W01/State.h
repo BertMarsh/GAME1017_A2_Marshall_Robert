@@ -1,9 +1,9 @@
 #pragma once
 #include <SDL.h>
+#include <vector>
 
 #include "Sprite.h"
 #include "Player.h"
-#include "Obstacles.h"
 #include "Button.h"
 
 
@@ -43,16 +43,20 @@ private:
 	Sprite BgArray[2];
 	Sprite FgArray[2];
 	Sprite PArray[5];
+	
 	SDL_Texture* m_pSprText;
 	Player* m_pPlayer;
 	SDL_Point m_pivot;
+	
 	SDL_Renderer* m_pRend;
 	SDL_Texture* m_pText;
+	
+	int m_iOSpawn, m_iOSpawnMax;
+	std::vector<Obstacles*> m_vObstacles;
 public:
 	GameState();
 	void Enter();
 	void Update();
-	
 	void CheckCollision();
 	void Render();
 	void Resume();
@@ -79,18 +83,3 @@ public:
 	void Exit();
 };
 
-//class StateManager
-//{
-//private:
-//	std::vector<State*> m_vStates;
-//public:
-//	StateManager();
-//	~StateManager();
-//	void Update();
-//	void Render();
-//	void ChangeState(State* pState);//Normal state change
-//	void PushState(State* pState);//GameState to PauseState
-//	void PopState();//PauseState to GameState
-//	void Clean();
-//	std::vector<State*>& GetStates();
-//};

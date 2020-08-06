@@ -24,12 +24,12 @@ void Player::Update(bool sX, bool sY)
 	m_VelX *= (m_grounded ? m_drag : 1);
 	m_VelX = std::min(std::max(m_VelX, -(m_MaxVelX)), (m_MaxVelX));
 	if (!sX)
-		m_rDst.x += (int)m_VelX;
+		m_Dst.x += (int)m_VelX;
 	//Y-Axis
 	m_VelY += m_accelY + m_grav;
 	m_VelY = std::min(std::max(m_VelY, -(m_MaxVelY)), (m_MaxVelY));
 	if (sY)
-		m_rDst.y += (int)m_VelY;
+		m_Dst.y += (int)m_VelY;
 	m_accelX = m_accelY = 0.0;
 }
 
@@ -54,5 +54,5 @@ bool Player::isGrounded() { return m_grounded; }
 void Player::SetGrounded(bool g) { m_grounded = g; }
 double Player::GetVelX() { return m_VelX; }
 double Player::GetVelY() { return m_VelY; }
-void Player::SetX(float y) { m_rDst.x = y; }
-void Player::SetY(float y){m_rDst.y =y;}
+void Player::SetX(float y) { m_Dst.x = y; }
+void Player::SetY(float y){m_Dst.y =y;}

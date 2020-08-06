@@ -4,15 +4,15 @@
 #include "Engine.h"
 #include "EventManager.h"
 
-Button::Button(SDL_Rect s, SDL_Rect d, SDL_Renderer* r, SDL_Texture* t)
-	:Sprite(s, d, r, t), m_state(STATE_UP) {}
+Button::Button(SDL_Rect src, SDL_Rect dst, SDL_Renderer* r, SDL_Texture* t)
+	:Sprite(src, dst, r, t), m_state(STATE_UP) {}
 
 bool MouseCollision()
 {
-	const int mx = EventManager::GetMousePos().x;
+	/*const int mx = EventManager::GetMousePos().x;
 	const int my = EventManager::GetMousePos().y;
-	return (mx < (m_rDst.x + m_rDst.w) && mx>m_rDst.x 
-		&& my<(m_rDst.y + m_rDst.h) && my > m_rDst.y);
+	return (mx < (m_Dst.x + m_Dst.w) && mx>m_Dst.x 
+		&& my<(m_Dst.y + m_Dst.h) && my > m_Dst.y);*/
 }
 
 int Button::Update()
