@@ -13,6 +13,9 @@ protected:
 	enum state { STATE_UP, STATE_DOWN, STATE_OVER } m_state;
 	bool MouseCollision();
 	virtual void Execute() = 0;
+private:
+	SDL_Rect m_rSrc;
+	SDL_Rect m_rDst;
 };
 
 class PlayButton :public Button

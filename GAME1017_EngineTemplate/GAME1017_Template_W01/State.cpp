@@ -1,5 +1,6 @@
 #include "State.h"
 #include "Engine.h"
+#include "Player.h"
 #include "StateManager.h"
 #include "EventManager.h"
 
@@ -38,7 +39,7 @@ void TitleState::Enter()
 {
 	std::cout << "Welcome to the game! \n" << "Entering TitleState" << std::endl;
 	m_BText = IMG_LoadTexture(Engine::Instance().GetRenderer(), "../Assets/StartButton.png");
-	m_PlayB = { {0,0,372,195}, {315,400,372,195} };
+	m_PlayB = { {0,0,372,195}, {315,400,372,195}, m_pRend, m_pText };
 }
 
 void TitleState::Update()
@@ -69,22 +70,21 @@ void GameState::Enter()
 	//All Sprites
 	//Background
 	m_pBGText = IMG_LoadTexture(Engine::Instance().GetRenderer(), "../Assets/Background.png");
-	BgArray[0] = { {0,0,1024,768}, {0,0,1024,768} };
-	BgArray[1] = { {0,0,1024,768}, {1024,0,1024,768} };
+	BgArray[0] = { {0,0,1024,768}, {0,0,1024,768}, m_pRend, m_pText };
+	BgArray[1] = { {0,0,1024,768}, {1024,0,1024,768}, m_pRend, m_pText };
 	//Midground
 	m_pFGText = IMG_LoadTexture(Engine::Instance().GetRenderer(), "../Assets/Platform.png");
-	FgArray[0] = { {0,0,1024,257}, {0,600,1024,257} };
-	FgArray[1] = { {0,0,1024,257}, {1024,600,1024,257} };
+	FgArray[0] = { {0,0,1024,257}, {0,600,1024,257}, m_pRend, m_pText };
+	FgArray[1] = { {0,0,1024,257}, {1024,600,1024,257}, m_pRend, m_pText };
 	//Foreground
 	m_pPText = IMG_LoadTexture(Engine::Instance().GetRenderer(), "../Assets/Pillars.png");
-	PArray[0] = { {0,0,525,511}, {0,0,550,600} };
-	PArray[1] = { {0,0,525,511}, {275,0,550,600} };
-	PArray[2] = { {0,0,525,511}, {550,0,550,600} };
-	PArray[3] = { {0,0,525,511}, {825,0,550,600} };
-	PArray[4] = { {0,0,525,511}, {1100,0,550,600} };
+	PArray[0] = { {0,0,525,511}, {0,0,550,600}, m_pRend, m_pText };
+	PArray[1] = { {0,0,525,511}, {275,0,550,600}, m_pRend, m_pText };
+	PArray[2] = { {0,0,525,511}, {550,0,550,600}, m_pRend, m_pText };
+	PArray[3] = { {0,0,525,511}, {825,0,550,600}, m_pRend, m_pText };
+	PArray[4] = { {0,0,525,511}, {1100,0,550,600}, m_pRend, m_pText };
 	//Player Running
-	m_pSprText = IMG_LoadTexture(Engine::Instance().GetRenderer(), "../Assets/Player.png");
-	m_pPlayer = new Player({0,0,128,128}, {25,475,128,128});
+	void Player::Render();
 }
 
 void GameState::Update()
@@ -138,12 +138,12 @@ void GameState::Update()
 	}*/
 	else if (Engine::Instance().KeyDown(SDL_SCANCODE_S) && m_pPlayer->GetDstP()->y > m_pPlayer->GetDstP()->h)
 	{
-		m_pPlayer = new Player({ 128,128,128,128 }, { 25,475,128,128 });
+		m_pPlayer = new Player({ 128,128,128,128 }, { 25,475,128,128}, m_pRend, m_pText);
 		m_pPlayer->Animate();
 	}
 	else if (Engine::Instance().KeyDown(SDL_SCANCODE_S) && m_pPlayer->GetDstP()->y > m_pPlayer->GetDstP()->h)
 	{
-		m_pPlayer = new Player({ 0,0,128,128 }, { 25,475,128,128 });
+		m_pPlayer = new Player({ 0,0,128,128 }, { 25,475,128,128 }, m_pRend, m_pText);
 	}
 	//Obstacles
 

@@ -1,11 +1,11 @@
-/*#include *//*<SDL.h>
+#include <SDL.h>
 
 #include "Button.h"
 #include "Engine.h"
 #include "EventManager.h"
 
 Button::Button(SDL_Rect s, SDL_Rect d, SDL_Renderer* r, SDL_Texture* t)
-	:Sprite(s, d), m_state(STATE_UP) {}
+	:Sprite(s, d, r, t), m_state(STATE_UP) {}
 
 bool MouseCollision()
 {
@@ -14,6 +14,7 @@ bool MouseCollision()
 	return (mx < (m_rDst.x + m_rDst.w) && mx>m_rDst.x 
 		&& my<(m_rDst.y + m_rDst.h) && my > m_rDst.y);
 }
+
 int Button::Update()
 {
 	bool col = MouseCollision();
@@ -45,9 +46,12 @@ int Button::Update()
 	return 0;
 }
 
-void Button::Render()
-{
-	m_rSrc.x = m_rSrc.w * (int)m_state;
-	SDL_RenderCopy(Engine::Instance().GetRenderer(), GetSrcP(), GetDstP() -
+void Button::Render(){}
 
-}*/
+PlayButton::PlayButton(SDL_Rect src, SDL_Rect dst, SDL_Renderer* r, SDL_Texture* t)
+	:Button (src,dst,r,t) {}
+
+void PlayButton::Execute()
+{
+	StateManager::ChangeState(new GameState);
+}

@@ -46,7 +46,8 @@ private:
 	SDL_Texture* m_pSprText;
 	Player* m_pPlayer;
 	SDL_Point m_pivot;
-	
+	SDL_Renderer* m_pRend;
+	SDL_Texture* m_pText;
 public:
 	GameState();
 	void Enter();

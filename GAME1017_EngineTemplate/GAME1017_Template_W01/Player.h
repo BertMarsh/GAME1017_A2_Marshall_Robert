@@ -7,7 +7,8 @@
 class Player : public AnimatedSprite
 {
 private:
-	
+	SDL_Texture* m_pSprText;
+	Player* m_pPlayer;
 private:
 	bool m_grounded;
 	double m_accelX,
@@ -19,8 +20,9 @@ private:
 		m_drag,
 		m_grav;
 public:
-	Player(SDL_Rect s, SDL_Rect d);
+	Player(SDL_Rect s, SDL_Rect d, SDL_Renderer* r, SDL_Texture* t);
 	void Update(bool sX, bool sY);
+	void Render();
 	void Stop();
 	void StopX();
 	void StopY();

@@ -1,11 +1,13 @@
 #include <algorithm>
 #include <iostream>
+#include <SDL.h>
+#include <SDL_image.h>
 
 #include "Player.h"
 #include "Engine.h"
 
-Player::Player(SDL_Rect s, SDL_Rect d)
-	:AnimatedSprite(90, 8, 4, s,d)
+Player::Player(SDL_Rect s, SDL_Rect d, SDL_Renderer* r, SDL_Texture* t)
+	:AnimatedSprite(90, 8, 4, s,d, r, t)
 {
 	m_grounded = false;
 	m_accelX = m_accelY = m_VelX = m_VelY = 0.0;
@@ -29,6 +31,13 @@ void Player::Update(bool sX, bool sY)
 	if (sY)
 		m_rDst.y += (int)m_VelY;
 	m_accelX = m_accelY = 0.0;
+}
+
+void Player::Render()
+{
+	m_pSprText = IMG_LoadTexture(Engine::Instance().GetRenderer(), "../Assets/Player.png");
+	m_pPlayer = new Player({ 0,0,128,128 }, { 25,475,128,128 }, m_pRend, m_pText);
+
 }
 
 void Player::Stop()
