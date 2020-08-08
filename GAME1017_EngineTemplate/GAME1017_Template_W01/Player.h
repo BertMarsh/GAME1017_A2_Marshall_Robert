@@ -20,8 +20,8 @@ private:
 		m_drag,
 		m_grav;
 public:
-	Player(SDL_Rect s, SDL_Rect d, SDL_Renderer* r, SDL_Texture* t);
-	void Update(bool sX, bool sY);
+	Player(SDL_Rect s, SDL_Rect d);
+	void Update();
 	void Render();
 	void Stop();
 	void StopX();

@@ -36,7 +36,7 @@ public: // Public methods.
 	int Run();
 	static Engine& Instance(); // This static method creates the static instance that can be accessed 'globally'
 	bool KeyDown(SDL_Scancode c);
-	bool KeyUp(SDL_Scancode c);
+	//bool KeyUp(SDL_Scancode c);
 	SDL_Renderer* GetRenderer();
 	StateManager& GetStateManager();
 	bool& Running();

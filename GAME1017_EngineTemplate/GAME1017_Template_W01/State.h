@@ -1,10 +1,13 @@
 #pragma once
+#define NUMPLATFORMS 1
+
 #include <SDL.h>
 #include <vector>
 
 #include "Sprite.h"
 #include "Player.h"
 #include "Button.h"
+#include "Obstacles.h"
 
 
 
@@ -43,21 +46,25 @@ private:
 	Sprite BgArray[2];
 	Sprite FgArray[2];
 	Sprite PArray[5];
+	SDL_FRect* m_pPlatforms[NUMPLATFORMS];
+	
 	
 	SDL_Texture* m_pSprText;
 	Player* m_pPlayer;
 	SDL_Point m_pivot;
-	
 	SDL_Renderer* m_pRend;
 	SDL_Texture* m_pText;
 	
 	int m_iOSpawn, m_iOSpawnMax;
 	std::vector<Obstacles*> m_vObstacles;
+	SDL_Texture* m_pOText;
+	Obstacles* m_pObstacles;
 public:
 	GameState();
 	void Enter();
 	void Update();
 	void CheckCollision();
+	void setGrounded(bool g);
 	void Render();
 	void Resume();
 	void Exit();

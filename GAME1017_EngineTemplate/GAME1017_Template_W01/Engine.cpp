@@ -36,6 +36,7 @@ bool Engine::Init(const char* title, int xpos, int ypos, int width, int height, 
 	else return false; // SDL init fail.
 	m_fps = (Uint32)round((1 / (double)FPS) * 1000); // Sets FPS in milliseconds and rounds.
 	m_iKeystates = SDL_GetKeyboardState(nullptr);
+
 	StateManager::ChangeState(new TitleState);
 	
 	m_bRunning = true; // Everything is okay, start the engine.

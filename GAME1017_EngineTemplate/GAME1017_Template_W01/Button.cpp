@@ -1,18 +1,20 @@
 #include <SDL.h>
 
+
 #include "Button.h"
 #include "Engine.h"
 #include "EventManager.h"
 
-Button::Button(SDL_Rect src, SDL_Rect dst, SDL_Renderer* r, SDL_Texture* t)
-	:Sprite(src, dst, r, t), m_state(STATE_UP) {}
+Button::Button(SDL_Rect src, SDL_Rect dst)
+	:Sprite(src, dst), m_state(STATE_UP){}
 
-bool MouseCollision()
+bool Button::MouseCollision()
 {
-	/*const int mx = EventManager::GetMousePos().x;
+	const int mx = EventManager::GetMousePos().x;
 	const int my = EventManager::GetMousePos().y;
+
 	return (mx < (m_Dst.x + m_Dst.w) && mx>m_Dst.x 
-		&& my<(m_Dst.y + m_Dst.h) && my > m_Dst.y);*/
+		&& my<(m_Dst.y + m_Dst.h) && my > m_Dst.y);
 }
 
 int Button::Update()
@@ -48,8 +50,8 @@ int Button::Update()
 
 void Button::Render(){}
 
-PlayButton::PlayButton(SDL_Rect src, SDL_Rect dst, SDL_Renderer* r, SDL_Texture* t)
-	:Button (src,dst,r,t) {}
+PlayButton::PlayButton(SDL_Rect src, SDL_Rect dst)
+	:Button (src,dst) {}
 
 void PlayButton::Execute()
 {

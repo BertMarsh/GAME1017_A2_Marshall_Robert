@@ -40,8 +40,8 @@ TitleState::TitleState() {}
 void TitleState::Enter()
 {
 	std::cout << "Welcome to the game! \n" << "Entering TitleState" << std::endl;
-	m_BText = IMG_LoadTexture(Engine::Instance().GetRenderer(), "../Assets/StartButton.png");
-	/*m_PlayB = { {0,0,372,195}, {315,400,372,195}, m_pRend, m_pText, 0.0 };*/
+	/*m_BText = IMG_LoadTexture(Engine::Instance().GetRenderer(), "../Assets/StartButton.png");
+	m_PlayB = { {0,0,372,195}, {315,400,372,195}};*/
 }
 
 void TitleState::Update()
@@ -52,9 +52,9 @@ void TitleState::Update()
 
 void TitleState::Render()
 {
-	SDL_SetRenderDrawColor(Engine::Instance().GetRenderer(), 255, 255, 255, 255);
+	SDL_SetRenderDrawColor(Engine::Instance().GetRenderer(), 149, 50, 0, 255);
 	SDL_RenderClear(Engine::Instance().GetRenderer());
-	SDL_RenderCopy(Engine::Instance().GetRenderer(), m_BText, m_PlayB.GetSrcP(), m_PlayB.GetDstP());
+	//SDL_RenderCopy(Engine::Instance().GetRenderer(), m_BText, m_PlayB.GetSrcP(), m_PlayB.GetDstP());
 	State::Render();
 }
 
@@ -64,7 +64,7 @@ void TitleState::Exit()
 }
 
 //GameState
-GameState::GameState() : m_iOSpawn(0), m_iOSpawnMax(3) {}
+GameState::GameState()  {}
 
 void GameState::Enter()
 {
@@ -72,21 +72,27 @@ void GameState::Enter()
 	//All Sprites
 	//Background
 	m_pBGText = IMG_LoadTexture(Engine::Instance().GetRenderer(), "../Assets/Background.png");
-	BgArray[0] = { {0,0,1024,768}, {0,0,1024,768}, m_pRend, m_pText };
-	BgArray[1] = { {0,0,1024,768}, {1024,0,1024,768}, m_pRend, m_pText };
+	BgArray[0] = { {0,0,1024,768}, {0,0,1024,768} };
+	BgArray[1] = { {0,0,1024,768}, {1024,0,1024,768} };
 	//Midground
 	m_pFGText = IMG_LoadTexture(Engine::Instance().GetRenderer(), "../Assets/Platform.png");
-	FgArray[0] = { {0,0,1024,257}, {0,600,1024,257}, m_pRend, m_pText };
-	FgArray[1] = { {0,0,1024,257}, {1024,600,1024,257}, m_pRend, m_pText };
+	FgArray[0] = { {0,0,1024,257}, {0,600,1024,257} };
+	FgArray[1] = { {0,0,1024,257}, {1024,600,1024,257} };
 	//Foreground
 	m_pPText = IMG_LoadTexture(Engine::Instance().GetRenderer(), "../Assets/Pillars.png");
-	PArray[0] = { {0,0,525,511}, {0,0,550,600}, m_pRend, m_pText };
-	PArray[1] = { {0,0,525,511}, {275,0,550,600}, m_pRend, m_pText };
-	PArray[2] = { {0,0,525,511}, {550,0,550,600}, m_pRend, m_pText };
-	PArray[3] = { {0,0,525,511}, {825,0,550,600}, m_pRend, m_pText };
-	PArray[4] = { {0,0,525,511}, {1100,0,550,600}, m_pRend, m_pText };
-	//Player Running
-	//void Player::Render();
+	PArray[0] = { {0,0,525,511}, {0,0,550,600}};
+	PArray[1] = { {0,0,525,511}, {275,0,550,600}};
+	PArray[2] = { {0,0,525,511}, {550,0,550,600}};
+	PArray[3] = { {0,0,525,511}, {825,0,550,600}};
+	PArray[4] = { {0,0,525,511}, {1100,0,550,600}};
+	////Player Running
+	m_pSprText = IMG_LoadTexture(Engine::Instance().GetRenderer(), "../Assets/Player.png");
+	m_pPlayer = new Player({ 0,0,128,128 }, { 25,475,128,128 });
+	//Obstacles
+	m_pOText = IMG_LoadTexture(Engine::Instance().GetRenderer(), "../Assets/Obstacles.png");
+	m_pObstacles = new Obstacles({0, 132, 130, 130}, {500, 400, 130, 130});
+	//Platforms
+	m_pPlatforms[0] = new SDL_FRect({ -100.0f, 700.0f,1224.0f,100.0f });
 }
 
 void GameState::Update()
@@ -123,54 +129,60 @@ void GameState::Update()
 		PArray[3].GetDstP()->x = 825;
 		PArray[4].GetDstP()->x = 1100;
 	}
-	//Player
-	if (Engine::Instance().KeyDown(SDL_SCANCODE_A) && m_pPlayer->GetDstP()->x > m_pPlayer->GetDstP()->h)
-	{
-		m_pPlayer->GetDstP()->x -= PSPEED;
-		m_pPlayer->Animate();
-	}
-	else if (Engine::Instance().KeyDown(SDL_SCANCODE_D) && m_pPlayer->GetDstP()->x < WIDTH / 2)
-	{
-		m_pPlayer->GetDstP()->x += PSPEED;
-		m_pPlayer->Animate();
-	}
-	/*else if (Engine::Instance().KeyDown(SDL_SCANCODE_SPACE) && m_pPlayer->GetDstP()->y > m_pPlayer->GetDstP()->h)
-	{
-		m_pPlayer->GetDstP()->y -= JUMPSTR;
-		m_pPlayer->Animate();
-	}*/
-	else if (Engine::Instance().KeyDown(SDL_SCANCODE_S) && m_pPlayer->GetDstP()->y > m_pPlayer->GetDstP()->h)
-	{
-		m_pPlayer = new Player({ 128,128,128,128 }, { 25,475,128,128}, m_pRend, m_pText);
-		m_pPlayer->Animate();
-	}
-	else if (Engine::Instance().KeyDown(SDL_SCANCODE_S) && m_pPlayer->GetDstP()->y > m_pPlayer->GetDstP()->h)
-	{
-		m_pPlayer = new Player({ 0,0,128,128 }, { 25,475,128,128 }, m_pRend, m_pText);
-	}
+	////Player
+	//if (Engine::Instance().KeyDown(SDL_SCANCODE_A) && m_pPlayer->GetDstP()->x > m_pPlayer->GetDstP()->h)
+	//{
+	//	m_pPlayer->GetDstP()->x -= PSPEED;
+	//	m_pPlayer->Animate();
+	//}
+	//else if (Engine::Instance().KeyDown(SDL_SCANCODE_D) && m_pPlayer->GetDstP()->x < WIDTH / 2)
+	//{
+	//	m_pPlayer->GetDstP()->x += PSPEED;
+	//	m_pPlayer->Animate();
+	//}
+	//else if (Engine::Instance().KeyDown(SDL_SCANCODE_SPACE) && m_pPlayer->GetDstP()->y > m_pPlayer->GetDstP()->h)
+	//{
+	//	m_pPlayer->GetDstP()->y -= JUMPSTR;
+	//	m_pPlayer->Animate();
+	//}
+	//else if (Engine::Instance().KeyDown(SDL_SCANCODE_S) && m_pPlayer->GetDstP()->y > m_pPlayer->GetDstP()->h)
+	//{
+	//	m_pPlayer = new Player({ 128,128,128,128 }, { 0,0,128,128});
+	//	m_pPlayer->Animate();
+	//}
+	//else if (Engine::Instance().KeyDown(SDL_SCANCODE_W) && m_pPlayer->GetDstP()->y > m_pPlayer->GetDstP()->h)
+	//{
+	//	m_pPlayer = new Player({ 0,0,128,128 }, { 25,475,128,128 });
+	//}
+
+	if (EventManager::KeyHeld(SDL_SCANCODE_D))
+		m_pPlayer->SetAccelX(1.0);
+	m_pPlayer->Update();
+
+
 	//Obstacles
 	//Movement
-	for (int i = 0; i < (int)m_vObstacles.size(); i++)
+	/*for (int i = 0; i < (int)m_vObstacles.size(); i++)
 	{
 		m_vObstacles[i]->Update();
-		if (m_vObstacles[i]->GetDstP->x < -50)
+		if (m_vObstacles[i]->GetDstP()->x < -50)
 		{
 			delete m_vObstacles[i];
 			m_vObstacles[i] = nullptr;
-		}
-	}
+		}*/
+	//}
 	//Obstacle Spawns
-	if (m_iOSpawn++ == m_iOSpawnMax)
-	{
-		m_vObstacles.push_back(new Obstacles({ 132,130, 100, 100 }, {700, 200, 100, 100 }))
-	}
+	//if (m_iOSpawn++ == m_iOSpawnMax)
+	//{
+	//	//m_vObstacles.push_back(new Obstacles({ 132,130, 100, 100 }, { m_Dst.x,m_Dst.y - 28,14,14 }, -10));
+	//}
 }
 
 void GameState::CheckCollision()
 { 
 	//Player vs Enemy
 
-	SDL_Rect p = { m_pPlayer->GetDstP()->x - 100, m_pPlayer->GetDstP()->y, 100, 94 };
+	/*SDL_Rect p = { m_pPlayer->GetDstP()->x - 100, m_pPlayer->GetDstP()->y, 100, 94 };
 	for (int i = 0; i < (int)m_vObstacles.size; i++)
 	{
 		SDL_Rect e = { m_vObstacles[i]->GetDstP()->x, m_vObstacles[i]->GetDstP()->y - 40, 56, 40 };
@@ -179,7 +191,12 @@ void GameState::CheckCollision()
 			std::cout << "You have died" << std::endl;
 			break;
 		}
-	}
+	}*/
+}
+
+void GameState::setGrounded(bool g)
+{
+	
 }
 
 
@@ -200,7 +217,8 @@ void GameState::Render()
 		SDL_RenderCopy(Engine::Instance().GetRenderer(), m_pPText, PArray[i].GetSrcP(), PArray[i].GetDstP());
 	//Player
 	SDL_RenderCopy(Engine::Instance().GetRenderer(), m_pSprText, m_pPlayer->GetSrcP(), m_pPlayer->GetDstP());
-	
+	//Obstacles
+	SDL_RenderCopy(Engine::Instance().GetRenderer(), m_pOText, m_pObstacles->GetSrcP(), m_pObstacles->GetDstP());
 	
 	if (dynamic_cast<GameState*>(Engine::Instance().GetStateManager().GetStates().back()))
 		State::Render();

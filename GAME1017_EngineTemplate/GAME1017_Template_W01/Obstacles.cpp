@@ -7,8 +7,11 @@
 #include "Obstacles.h"
 #include "Engine.h"
 
-Obstacles::Obstacles(SDL_Rect src, SDL_Rect dst, SDL_Renderer* r, SDL_Texture* t) 
-	:Sprite (src, dst, r, t) {}
+Obstacles::Obstacles(SDL_Rect src, SDL_Rect dst) 
+	:Sprite (src, dst) 
+{
+	
+}
 
 void Obstacles::Update()
 {
