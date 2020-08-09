@@ -8,6 +8,7 @@
 #include "Player.h"
 #include "Button.h"
 #include "Obstacles.h"
+#include "Label.h"
 
 
 
@@ -29,6 +30,11 @@ class TitleState : public State
 private:
 	SDL_Texture* m_BText;
 	Sprite m_PlayB;
+
+	SDL_Renderer* m_tRend;
+	SDL_Texture* m_tText;
+
+	Label* m_pPLabel;
 public:
 	TitleState();
 	void Enter();
@@ -51,7 +57,7 @@ private:
 	
 	SDL_Texture* m_pSprText;
 	Player* m_pPlayer;
-	SDL_Point m_pivot;
+	SDL_FPoint m_pivot;
 	SDL_Renderer* m_pRend;
 	SDL_Texture* m_pText;
 	

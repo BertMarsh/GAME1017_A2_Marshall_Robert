@@ -5,8 +5,8 @@
 #include "Engine.h"
 #include "EventManager.h"
 
-Button::Button(SDL_Rect src, SDL_Rect dst)
-	:Sprite(src, dst), m_state(STATE_UP){}
+Button::Button(SDL_Rect src, SDL_FRect dst, SDL_Renderer* r, SDL_Texture* t)
+	:Sprite(src, dst, r, t), m_state(STATE_UP){}
 
 bool Button::MouseCollision()
 {
@@ -50,8 +50,8 @@ int Button::Update()
 
 void Button::Render(){}
 
-PlayButton::PlayButton(SDL_Rect src, SDL_Rect dst)
-	:Button (src,dst) {}
+PlayButton::PlayButton(SDL_Rect src, SDL_FRect dst, SDL_Renderer* r, SDL_Texture* t)
+	:Button (src,dst, r, t) {}
 
 void PlayButton::Execute()
 {

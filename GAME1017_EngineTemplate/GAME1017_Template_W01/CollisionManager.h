@@ -13,5 +13,6 @@ public:
 	static bool CircleAABBCheck(const SDL_FPoint object1, const double r, const SDL_FRect& object2);
 	static bool LinePointCheck(const SDL_FPoint object1_start, const SDL_FPoint object1_end, const SDL_FPoint object2);
 private:
+	CollisionManager(){}
 };
 

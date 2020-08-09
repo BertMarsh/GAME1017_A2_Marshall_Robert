@@ -9,6 +9,6 @@ class Obstacles : public Sprite
 private:
 	std::vector<Obstacles*> m_vObstacles;
 public:
-	Obstacles(SDL_Rect src, SDL_Rect dst);
+	Obstacles(SDL_Rect src, SDL_FRect dst, SDL_Renderer* r, SDL_Texture* t);
 	void Update();
 };

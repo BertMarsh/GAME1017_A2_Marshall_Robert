@@ -33,6 +33,10 @@ bool CollisionManager::LinePointCheck(const SDL_FPoint object1_start, const SDL_
 	double DisttoStart = MathManager::Distance((double)object1_start.x, (double)object2.x, (double)object1_start.y, (double)object2.y);
 	double DisttoEnd = MathManager::Distance((double)object1_end.x, (double)object2.x, (double)object1_end.y, (double)object2.y);
 	 
-	double LineLength;
+	double LineLength = MathManager::Distance((double)object1_start.x, (double)object1_end.x, (double)object1_start.y, (double)object1_end.y);
+	double buffer = 0.2;
+		
+	if (DisttoStart + DisttoEnd <= LineLength + buffer)
+		return true;
 	return false;
 }
